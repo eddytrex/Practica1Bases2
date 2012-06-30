@@ -6,6 +6,7 @@ package GUI;
 
 import Cubo.Cubo;
 import Cubo.VistaCubo;
+import Cubo.VistaCuboE;
 import Mapeo.*;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -510,7 +511,31 @@ public class Front extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        crearJerarquias();
+ //crearJerarquias();
+        Iterator <hierarchy> tempH=this.hierarchies.iterator();
+        hierarchy temp=null;
+        
+        while(tempH.hasNext())
+        {
+            temp=tempH.next();            
+            es.setDimX1(temp.getPosibleDimension(), temp.getHeraquia(), temp.getName());
+        }       
+        
+        es.setDimTiempo(this.jerarquiaTiempo.get(0)[0], this.jerarquiaTiempo.get(0)[1]);
+        
+          
+          
+          java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+              VistaCuboE tempVCE=  new VistaCuboE();
+              
+              tempVCE.setOlap(es);
+              
+              tempVCE.generarTH("Prueba");
+              tempVCE.setVisible(true);
+            }
+        });
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed

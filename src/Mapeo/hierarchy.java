@@ -5,6 +5,7 @@
 package Mapeo;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -21,7 +22,34 @@ public class hierarchy {
     public void setFields(ArrayList<String[]> fields) {
         this.fields = fields;
     }
-
+    
+    public ArrayList<String>getHeraquia()
+    {
+        ArrayList<String>jq=new ArrayList();
+     /*   Iterator<String[]>ja=this.fields.iterator();
+     /*   while(ja.hasNext())
+        {
+            jq.add(ja.next()[1]);
+        }*/       
+        int i=0;
+        for(i=this.fields.size()-1;i>=0;i--)
+        {
+            jq.add(this.fields.get(i)[1]);
+            
+        }
+        return jq;
+    }
+    
+    public String getPosibleDimension()
+    {
+        String res="";
+        if(this.fields.size()>0)
+        {
+        res=this.fields.get(0)[0];
+        }
+        return res;
+    }
+    
     public String getName() {
         return name;
     }
@@ -31,3 +59,4 @@ public class hierarchy {
     }
 
 }
+

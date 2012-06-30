@@ -18,11 +18,16 @@ public class Olap {
     ModeloEstrella estrella;
     
     
+    
     Modelo a;    
     
     ArrayList<queryDim> dimensionesPosibles;     
     
     ArrayList <Dimension> dimX1=new ArrayList();
+
+    public ArrayList<Dimension> getDimX1() {
+        return dimX1;
+    }
      
     String tablaechosOrignial;
     
@@ -34,6 +39,22 @@ public class Olap {
     
     ArrayList<String> Camposmetricas=new ArrayList();
     
+    
+    
+    public Dimension getDimension(String nombre)
+    {
+        Dimension res=null;
+        Dimension temp=null;
+        Iterator <Dimension> tempD=this.dimX1.iterator();
+        
+        while(tempD.hasNext())    
+        {
+            temp=tempD.next();
+            if(temp.NombreDim.contains(nombre)){return temp;}
+        }           
+        
+        return res;
+    }
     
     public ArrayList<queryDim> getDimensionesPosibles() {
         return dimensionesPosibles;
@@ -221,7 +242,7 @@ public class Olap {
             
             
             
-            String STH="CREATE TABLE "+this.NombreTablahechos+" AS SELECT "+sCamposC+" FROM "+sTablasC+" WHERE "+sPredicadoC+";";
+            String STH="CREATE OR REPLACE TABLE "+this.NombreTablahechos+" AS SELECT "+sCamposC+" FROM "+sTablasC+" WHERE "+sPredicadoC+";";
             
             Sql th=new Sql();
             th.ejecuta(STH);

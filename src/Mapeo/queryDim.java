@@ -197,7 +197,7 @@ public class queryDim {
         
         String encabezado=pk+", extract(year from t."+campo_fecha+") AS año ,extract(quarter from t."+ campo_fecha+") AS trimestre ,extract(month from t."+ campo_fecha+") AS mes ,extract(day from t."+campo_fecha+") AS dia";
         String tablas=this.Nombre+" t";        
-        String CrearTabla="CREATE TABLE dim_tiempo "+" AS SELECT "+encabezado+" FROM "+tablas+";"; 
+        String CrearTabla="CREATE OR RAPLACE TABLE dim_tiempo "+" AS SELECT "+encabezado+" FROM "+tablas+";"; 
         
         Sql a=new Sql();
         a.ejecuta(CrearTabla);
