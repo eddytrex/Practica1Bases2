@@ -127,6 +127,15 @@ public class Modelo {
          }         
          return dimensiones;
      }
+     
+     public void setDimensionTiempo(String campoFechaH)
+     {
+         
+         queryDim a=new queryDim();
+         a.CrearDimensionTiempoTablaHechos(campoFechaH, entidadParaEchos);
+         
+     
+     }
 
     public Sql getSeq() {
         return seq;

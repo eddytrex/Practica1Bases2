@@ -1,1 +1,1 @@
-SELECT año FROM  ( SELECT  row_number() OVER (ORDER BY(año) )as N, año FROM dim_tiempo GROUP BY año,año) AS T;
+SELECT categoria_categoryname FROM  ( SELECT  row_number() OVER (ORDER BY(categoria_categoryname) )as N, categoria_categoryname FROM dim_p GROUP BY categoria_categoryname,categoria_categoryname) AS T;

@@ -520,8 +520,8 @@ public class Front extends javax.swing.JFrame {
             temp=tempH.next();            
             es.setDimX1(temp.getPosibleDimension(), temp.getHeraquia(), temp.getName());
         }       
-        
-        es.setDimTiempo(this.jerarquiaTiempo.get(0)[0], this.jerarquiaTiempo.get(0)[1]);
+        if(this.jerarquiaTiempo.size()!=0){
+        es.setDimTiempo(this.jerarquiaTiempo.get(0)[0], this.jerarquiaTiempo.get(0)[1]);}
         
           
           
@@ -695,7 +695,8 @@ public class Front extends javax.swing.JFrame {
 
     private void generarOlap(Modelo a, String title, ArrayList<String> metricas) {
         
-        es = new Olap(a,title,metricas);
+        //es = new Olap(a,title,metricas);
+        es=new Olap(a,title,metricas,"orderdate");
         myquery = es.getDimensionesPosibles();
         dimensionTiempo();
         crearNuevaUi(myquery);

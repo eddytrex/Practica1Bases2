@@ -73,6 +73,25 @@ public class Olap {
     }
     
     
+    public Olap(Modelo m,String tablaHechos,ArrayList<String> camposmetricas,String campoFechaHechos)
+    {
+        this.a=m;
+        
+        this.Camposmetricas=camposmetricas;
+        this.tablaechosOrignial=tablaHechos;
+        a.cargarEntidades();
+        a.getDimensiones(tablaHechos);                
+        
+        this.dimensionesPosibles=a.getDimOriginales();
+        
+        queryDim t1=new queryDim();
+        
+            t1.CrearDimensionTiempoTablaHechos(campoFechaHechos,a.BuscarEntidad(tablaHechos) );
+        
+        this.dimensionesPosibles.add(t1);
+    }
+    
+    
      public void setDimX1(String posibleDimension, ArrayList<String> jerarquia,String Nombre)
     {
         Iterator<queryDim> pd=dimensionesPosibles.iterator();
@@ -242,7 +261,7 @@ public class Olap {
             
             
             
-            String STH="CREATE OR REPLACE TABLE "+this.NombreTablahechos+" AS SELECT "+sCamposC+" FROM "+sTablasC+" WHERE "+sPredicadoC+";";
+            String STH="CREATE  TABLE "+this.NombreTablahechos+" AS SELECT "+sCamposC+" FROM "+sTablasC+" WHERE "+sPredicadoC+";";
             
             Sql th=new Sql();
             th.ejecuta(STH);
