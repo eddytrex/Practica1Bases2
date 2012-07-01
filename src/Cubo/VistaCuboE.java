@@ -17,12 +17,13 @@ import javax.swing.JTable;
  * @author eddytrex
  */
 public class VistaCuboE extends javax.swing.JFrame {
+
     public Modelo a;
     public Olap es;
     public ModeloEstrella mode;
     private CuboE cuboE;
+    public ArrayList<Dimension> dx1 = new ArrayList();
 
-     public ArrayList<Dimension>dx1=new ArrayList();
     /**
      * Creates new form VistaCuboE
      */
@@ -30,41 +31,75 @@ public class VistaCuboE extends javax.swing.JFrame {
         initComponents();
         this.jTable1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     }
-    
-    public void addDim(String nombreA,ArrayList<String>j,String Nombre)
-    {
+
+    public void addDim(String nombreA, ArrayList<String> j, String Nombre) {
         es.setDimX1(nombreA, j, Nombre);
     }
-    
-    public void setModeloMetricas(Modelo m,ArrayList<String> metricas,String th)
-    {
-        this.a=m;
+
+    public void setModeloMetricas(Modelo m, ArrayList<String> metricas, String th) {
+        this.a = m;
         this.a.cargarEntidades();
         this.a.ejecutaSecuencia();
-      
-        this.es=new Olap(a,th,metricas);
+
+        this.es = new Olap(a, th, metricas);
+
+
+        Iterator<String> metrica = metricas.iterator();
+        while (metrica.hasNext()) {
+            String me = metrica.next();
+            this.jCM1.addItem(me);
+        }
+        this.jCM1.addItem("");
+        metrica = metricas.iterator();
+        while (metrica.hasNext()) {
+            String me = metrica.next();
+            this.jCM2.addItem(me);
+        }
+        this.jCM2.addItem("");
+        this.jCO.addItem("+");
+        this.jCO.addItem("-");
+        this.jCO.addItem("*");
+        this.jCO.addItem("/");
+
     }
-    
-    public void setOlap(Olap t)
-    {
-        this.es=t;
-        
-        Iterator<Dimension> temp=this.es.getDimX1().iterator();
-        while(temp.hasNext())
-        {
+
+    public void setOlap(Olap t) {
+        this.es = t;
+
+        Iterator<Dimension> temp = this.es.getDimX1().iterator();
+        while (temp.hasNext()) {
             this.jCb.addItem(temp.next().NombreDim);
         }
+
+        Iterator<String> metrica = es.getMetricas().iterator();
+        while (metrica.hasNext()) {
+            String me = metrica.next();
+            this.jCM1.addItem(me);
+        }
+        this.jCM1.addItem("");
+        metrica = es.getMetricas().iterator();
+        while (metrica.hasNext()) {
+            String me = metrica.next();
+            this.jCM2.addItem(me);
+        }
+        this.jCM2.addItem("");
         
+        this.jCO.addItem("+");
+        this.jCO.addItem("-");
+        this.jCO.addItem("*");
+        this.jCO.addItem("/");
+
     }
-    
-    public void generarTH(String nombre)
-    {
-        
-        
-         this.es.generaTablaEchos(nombre);   
-         
-         mode = es.getModeloEstrella();
-         mode.setMetricas(es.getMetricas());
+
+    public void generarTH(String nombre) {
+
+
+        this.es.generaTablaEchos(nombre);
+
+        mode = es.getModeloEstrella();
+        mode.setMetricas(es.getMetricas());
+
+
     }
 
     /**
@@ -96,6 +131,9 @@ public class VistaCuboE extends javax.swing.JFrame {
         jButton10 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
         jmetricas = new javax.swing.JTextField();
+        jCM1 = new javax.swing.JComboBox();
+        jCM2 = new javax.swing.JComboBox();
+        jCO = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -197,7 +235,7 @@ public class VistaCuboE extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,10 +249,14 @@ public class VistaCuboE extends javax.swing.JFrame {
                         .addComponent(jt1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton6)
-                        .addGap(164, 164, 164)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCb, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jmetricas, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(37, 37, 37)
+                        .addComponent(jmetricas, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCM1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCO, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jCM2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addComponent(jtZ, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -229,12 +271,14 @@ public class VistaCuboE extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jCb, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton10)
                     .addComponent(jButton11))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,14 +309,14 @@ public class VistaCuboE extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jCb, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton10))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton11))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(jmetricas)))
-                        .addGap(21, 21, 21))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton11)
+                            .addComponent(jmetricas)
+                            .addComponent(jCM1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCM2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))))
         );
 
         pack();
@@ -282,88 +326,85 @@ public class VistaCuboE extends javax.swing.JFrame {
         // TODO add your handling code here:
         Front.URL = "jdbc:postgresql://127.0.0.1:5432/prueba";
         Front.user = "postgres";
-        Front.password = "postgres";       
+        Front.password = "postgres";
         a = new Modelo();
-            a.cargarEntidades();                                    
-            a.ejecutaSecuencia();
-           // Entidad prueba=a.BuscarEntidad("agencia");                        
-            //ArrayList<String> dimensiones=a.getDimensiones("detallefactura");           
-            ArrayList<Entidad> x = a.getEntidades();            
-        
-            ArrayList<String> metricas=new ArrayList();
-            
-            metricas.add("quantity");
-            es = new Olap(a,"orden",metricas);
-            
-            ArrayList<String> jeraquia=new ArrayList();
-            
-            //jeraquia.add("pais_nombre");
-            //jeraquia.add("departamento_nombre");
-            //jeraquia.add("municipio_nombre");
-            //jeraquia.add("agencia_nombre");           
-            
-             jeraquia.add("pais_country");
-            jeraquia.add("cliente_firstname");
-            
-            es.setDimX1("dimension_01", jeraquia, "cliente");
-            
-            
-            
-            
-           //Dimension dim=new Dimension(a.getDimOriginales().get(1),jeraquia);         
-           
-           //a.getDimOriginales().get(1).CrearDimensionTiempo("factura_fecha");
-                    
-           //dim.CrearDimension("Ubicacion");
-                     
-           jeraquia=new ArrayList();
-           
-           jeraquia.add("categoria_categoryname");
-           jeraquia.add("producto_title");
-           //jeraquia.add("producto_nombre");
-           
-           es.setDimX1("dimension_02", jeraquia, "producto");
-           
-           //es.setDimTiempo("dimension_02", "factura_fecha");
-           
-           jeraquia=new ArrayList();
-           jeraquia.add("vendedor_vendor_name");
-           
-           
-           es.setDimX1("dimension_03", jeraquia, "vendedor");
-           
-           // ya introducidas las dimenciones con jerarquias se coloca el nombre de la tabla hechos.  este metodo crea un Atributo de Olap(estrella) 
-           es.generaTablaEchos("prueba");
-           //TODO: 
-           //estrella tiene los campos  de la tabla hechos, las llaves foraneas  (hacia las dimenciones) y las dimenciones con jeraquias.
-             mode.setMetricas(metricas);
-             mode = es.getModeloEstrella();
-            
-            cuboE = new CuboE(mode,mode.dimX1,1);
-            
-            this.jTable1.setModel(cuboE.tm);
-        
-        
-       // this.jTable1.setModel(cuboE.tm);
-        
+        a.cargarEntidades();
+        a.ejecutaSecuencia();
+        // Entidad prueba=a.BuscarEntidad("agencia");                        
+        //ArrayList<String> dimensiones=a.getDimensiones("detallefactura");           
+        ArrayList<Entidad> x = a.getEntidades();
+
+        ArrayList<String> metricas = new ArrayList();
+
+        metricas.add("quantity");
+        es = new Olap(a, "orden", metricas);
+
+        ArrayList<String> jeraquia = new ArrayList();
+
+        //jeraquia.add("pais_nombre");
+        //jeraquia.add("departamento_nombre");
+        //jeraquia.add("municipio_nombre");
+        //jeraquia.add("agencia_nombre");           
+
+        jeraquia.add("pais_country");
+        jeraquia.add("cliente_firstname");
+
+        es.setDimX1("dimension_01", jeraquia, "cliente");
+
+
+
+
+        //Dimension dim=new Dimension(a.getDimOriginales().get(1),jeraquia);         
+
+        //a.getDimOriginales().get(1).CrearDimensionTiempo("factura_fecha");
+
+        //dim.CrearDimension("Ubicacion");
+
+        jeraquia = new ArrayList();
+
+        jeraquia.add("categoria_categoryname");
+        jeraquia.add("producto_title");
+        //jeraquia.add("producto_nombre");
+
+        es.setDimX1("dimension_02", jeraquia, "producto");
+
+        //es.setDimTiempo("dimension_02", "factura_fecha");
+
+        jeraquia = new ArrayList();
+        jeraquia.add("vendedor_vendor_name");
+
+
+        es.setDimX1("dimension_03", jeraquia, "vendedor");
+
+        // ya introducidas las dimenciones con jerarquias se coloca el nombre de la tabla hechos.  este metodo crea un Atributo de Olap(estrella) 
+        es.generaTablaEchos("prueba");
+        //TODO: 
+        //estrella tiene los campos  de la tabla hechos, las llaves foraneas  (hacia las dimenciones) y las dimenciones con jeraquias.
+        mode.setMetricas(metricas);
+        mode = es.getModeloEstrella();
+
+        cuboE = new CuboE(mode, mode.dimX1, 1);
+
+        this.jTable1.setModel(cuboE.tm);
+
+
+        // this.jTable1.setModel(cuboE.tm);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void AddDim(Dimension x1)
-    {
+    public void AddDim(Dimension x1) {
         this.dx1.add(x1);
     }
-    
-    public void  CrearCubo()
-    {
-        
-        if(this.dx1.size()==3)
-        {
-            cuboE = new CuboE(this.mode,this.dx1,1);
+
+    public void CrearCubo() {
+
+        if (this.dx1.size() == 3) {
+            cuboE = new CuboE(this.mode, this.dx1, 1);
         }
-        
-    
+
+
     }
-    
+
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         cuboE.DirllDownX();
@@ -391,101 +432,108 @@ public class VistaCuboE extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
         cuboE.Dice(this.jt1.getText());
-          this.jTable1.setModel(cuboE.tm);
+        this.jTable1.setModel(cuboE.tm);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
         Pattern iPa = Pattern.compile("^\\d*$");
         Matcher matchesInteger = iPa.matcher(this.jtX.getText());
-        if(matchesInteger.matches())
-        {
-        int itemsX=Integer.parseInt(this.jtX.getText());
-        cuboE.Slide("x", itemsX);
-        }
-        else
-        {
-            ArrayList<String> a=new ArrayList();
-            
-            StringTokenizer tok=new StringTokenizer(this.jtX.getText(),"|");
-            while(tok.hasMoreTokens())
-            {
-               a.add(tok.nextToken());
-                
+        if (matchesInteger.matches()) {
+            int itemsX = Integer.parseInt(this.jtX.getText());
+            cuboE.Slide("x", itemsX);
+        } else {
+            ArrayList<String> a = new ArrayList();
+
+            StringTokenizer tok = new StringTokenizer(this.jtX.getText(), "|");
+            while (tok.hasMoreTokens()) {
+                a.add(tok.nextToken());
+
             }
-            
-            String sa[]=new String[a.toArray().length];
-            for(int i=0;i<a.toArray().length;i++)
-            {
-                sa[i]=(String)a.toArray()[i];
-            
+
+            String sa[] = new String[a.toArray().length];
+            for (int i = 0; i < a.toArray().length; i++) {
+                sa[i] = (String) a.toArray()[i];
+
             }
-            
-             cuboE.Slide("x", sa);
-            
+
+            cuboE.Slide("x", sa);
+
         }
-         this.jTable1.setModel(cuboE.tm);
+        this.jTable1.setModel(cuboE.tm);
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         // TODO add your handling code here:
-        
+
         Pattern iPa = Pattern.compile("^\\d*$");
         Matcher matchesInteger = iPa.matcher(this.jtY.getText());
-        if(matchesInteger.matches())
-        {
-         int itemsY=Integer.parseInt(this.jtY.getText());
-         cuboE.Slide("y", itemsY);
-        }
-        else
-        {
-            ArrayList<String> a=new ArrayList();
-            
-            StringTokenizer tok=new StringTokenizer(this.jtY.getText(),"|");
-            while(tok.hasMoreTokens())
-            {
-               a.add(tok.nextToken());
+        if (matchesInteger.matches()) {
+            int itemsY = Integer.parseInt(this.jtY.getText());
+            cuboE.Slide("y", itemsY);
+        } else {
+            ArrayList<String> a = new ArrayList();
+
+            StringTokenizer tok = new StringTokenizer(this.jtY.getText(), "|");
+            while (tok.hasMoreTokens()) {
+                a.add(tok.nextToken());
             }
-            
-            String sa[]=new String[a.toArray().length];
-            for(int i=0;i<a.toArray().length;i++)
-            {
-                sa[i]=(String)a.toArray()[i];
-            
+
+            String sa[] = new String[a.toArray().length];
+            for (int i = 0; i < a.toArray().length; i++) {
+                sa[i] = (String) a.toArray()[i];
+
             }
             cuboE.Slide("y", sa);
-            
+
         }
-          this.jTable1.setModel(cuboE.tm);
+        this.jTable1.setModel(cuboE.tm);
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
-        int itemsZ=Integer.parseInt(this.jtZ.getText());
+        int itemsZ = Integer.parseInt(this.jtZ.getText());
         cuboE.Slide("z", itemsZ);
-         this.jTable1.setModel(cuboE.tm);
+        this.jTable1.setModel(cuboE.tm);
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
-        String  Name=(String)this.jCb.getSelectedItem();
+        String Name = (String) this.jCb.getSelectedItem();
         this.jCb.removeItem(Name);
-        if(this.dx1.size()<3)
-        {
-        this.dx1.add(this.es.getDimension(Name));
+        if (this.dx1.size() < 3) {
+            this.dx1.add(this.es.getDimension(Name));
         }
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         // TODO add your handling code here:
-        if(this.dx1.size()==3)
-        {
-        int imetica=Integer.parseInt(this.jmetricas.getText());        
-        cuboE = new CuboE(mode,this.dx1,imetica);
-        
-        this.jTable1.setModel(cuboE.tm);
+        if (this.dx1.size() == 3) {
+            //int imetica = Integer.parseInt(this.jmetricas.getText());
+
+            String m1 = (String) this.jCM1.getSelectedItem();
+            String m2 = (String) this.jCM2.getSelectedItem();
+            String o = (String) this.jCO.getSelectedItem();
+            String total="";
+            if(!m1.equals("")&&!m2.equals(""))
+            {
+             total = m1 + o + m2;
+            }
+            else if(!m1.equals("")&&m2.equals(""))
+            {
+            total=m1;
+            }
+            else if(m1.equals("")&&!m2.equals(""))
+            {
+              total=m2;  
+            }
+            
+            //cuboE = new CuboE(mode,this.dx1,imetica);
+            cuboE = new CuboE(mode, this.dx1, total);
+
+            this.jTable1.setModel(cuboE.tm);
         }
-        
+
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
@@ -541,6 +589,9 @@ public class VistaCuboE extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox jCM1;
+    private javax.swing.JComboBox jCM2;
+    private javax.swing.JComboBox jCO;
     private javax.swing.JComboBox jCb;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

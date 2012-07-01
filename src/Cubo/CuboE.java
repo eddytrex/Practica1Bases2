@@ -85,7 +85,9 @@ public class CuboE {
      String slideZ;
      
      
-     int indiceMetrica;
+     int indiceMetrica=0;
+     
+     String sMetrica="";
      
      public ArrayList<Dimension> dimX1;
      
@@ -124,10 +126,52 @@ public class CuboE {
          this.querryDelCubo();
      }
      
+     public CuboE(ModeloEstrella mes,ArrayList<Dimension> dminx1,String M)
+     {
+            new Sql().ejecuta("CREATE EXTENSION tablefunc;");
+         
+         this.sMetrica=M;
+         
+         
+         this.dimX1=dminx1;
+         this.me=mes;
+         this.setCondicionJoin(dimX1.get(0).NombreDim,dimX1.get(1).NombreDim,dimX1.get(2).NombreDim);
+         
+         //this.setXDim(me.dimX1.get(0).NombreDim);
+         //this.setYDim();
+         //X=me.dimX1.get(0);
+         //Y=me.dimX1.get(1);
+         
+         this.NivelJeraquiaX=X.Jerarquia.get(0);
+         this.NivelJeraquiaY=Y.Jerarquia.get(0);
+         this.NivelJeraquiaZ=dimX1.get(2).Jerarquia.get(NivelJZ);
+         
+         this.iXN.add(null);
+         this.iYN.add(null);
+         this.iZN.add(null);
+         
+         this.iX.add(0);
+         this.iY.add(0);
+         this.iZ.add(0);
+         
+         
+         this.creatConidtionofKeys();
+         this.setConslutaKey();
+         
+         this.querryDelCubo();
+     }
+     
      void querryDelCubo()
      {
+         String select;
          String Querrytotal;
-         String select="cast("+this.Y.NombreDim+"."+this.NivelJeraquiaY+" AS text) , "+this.X.NombreDim+"."+this.NivelJeraquiaX+",cast( sum("+this.me.metricas.get(this.indiceMetrica)+") as text)";
+         if(this.sMetrica.equals("")){
+         select="cast("+this.Y.NombreDim+"."+this.NivelJeraquiaY+" AS text) , "+this.X.NombreDim+"."+this.NivelJeraquiaX+",cast( sum("+this.me.metricas.get(this.indiceMetrica)+") as text)";
+         }
+         else
+         {
+         select="cast("+this.Y.NombreDim+"."+this.NivelJeraquiaY+" AS text) , "+this.X.NombreDim+"."+this.NivelJeraquiaX+",cast( sum("+this.sMetrica+") as text)";
+         }
          String gby=this.NivelJeraquiaX+" , "+this.NivelJeraquiaY;
          String oby="1,2";
          String from=this.X.NombreDim+" , "+this.Y.NombreDim+" , "+this.Z.NombreDim+" , "+this.me.NombreFactTable;
