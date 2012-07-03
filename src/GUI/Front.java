@@ -40,7 +40,7 @@ public class Front extends javax.swing.JFrame {
     public ArrayList<hierarchy> hierarchies = new ArrayList<hierarchy>();
     DefaultMutableTreeNode top = new DefaultMutableTreeNode("Jearquias");
     
-    
+    public String campoFecha="";
             
     DefaultListModel dm = new DefaultListModel();
     /**
@@ -453,7 +453,8 @@ public class Front extends javax.swing.JFrame {
                         if(subcomp instanceof JCheckBox)
                         {
                             JCheckBox jchk = (JCheckBox) subcomp;
-                            String[] arr = jchk.getText().split("\\|");                            
+                            String[] arr = jchk.getText().split("\\|");        
+                            if(arr[0].equals("date ")){ this.campoFecha=arr[1].substring(1, arr[1].length());}
                             if(jchk.isSelected())
                             {
                                 metricas.add(arr[1]);                                
@@ -695,10 +696,19 @@ public class Front extends javax.swing.JFrame {
 
     private void generarOlap(Modelo a, String title, ArrayList<String> metricas) {
         
+        if(this.campoFecha.equals(""))
+        {
+            es = new Olap(a,title,metricas);
+            dimensionTiempo();
+        }
+        else{
         //es = new Olap(a,title,metricas);
-        es=new Olap(a,title,metricas,"orderdate");
+         jButton6.setEnabled(true);   
+  //       jButton8.setEnabled(false);
+        es=new Olap(a,title,metricas,this.campoFecha);
+        }
         myquery = es.getDimensionesPosibles();
-        dimensionTiempo();
+        //dimensionTiempo();
         crearNuevaUi(myquery);
         //generarJerarquia(es);
     }

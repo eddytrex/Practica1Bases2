@@ -1,1 +1,1 @@
-SELECT año FROM  ( SELECT  row_number() OVER (ORDER BY(año) )as N, año FROM dim_t GROUP BY año,año) AS T;
+SELECT cliente_firstname FROM  ( SELECT  row_number() OVER (ORDER BY(pais_country) )as N, cliente_firstname FROM dim_u GROUP BY pais_country,cliente_firstname ,pais_country  HAVING  pais_country IN ( SELECT pais_country FROM  ( SELECT  row_number() OVER (ORDER BY(pais_country) )as N, pais_country FROM dim_u GROUP BY pais_country,pais_country) AS T )) AS T1;
